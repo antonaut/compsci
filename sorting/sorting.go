@@ -1,7 +1,9 @@
 package sorting
 
 import (
+	"fmt"
 	"math"
+	"os"
 )
 
 type Sorter interface {
@@ -113,13 +115,88 @@ func (ms MergeSorter) merge(p, q, r int) {
 	}
 }
 
-type QuickSorter struct{}
+type QuickSorter struct {
+	cmp            func(int, int) bool
+	slice          []int
+	recursionDepth int
+}
 
 // TODO
 func (qs QuickSorter) Sort(slice []int, cmp func(int, int) bool) {
-	// pick pivot, median of three
+	fmt.Printf("QuickSort Commencing on %v!\n", slice)
+	qs.recursionDepth = 0
 
-	// partition around pivot, divide and conquer until insertion sort at fixed LIMIT
+	qs.slice = slice
+	qs.cmp = cmp
+	qs.qsort(0, len(qs.slice)-1, 0)
+}
+
+// TODO: Change cmp for ordering function instead. Needs this for
+// partitioning when sorting a multi-set or bag (multiple equal
+// elements exists in the slice)
+
+// slice = [2, 3, 1, 5, 6]
+// i = 0, j = 4
+func (qs QuickSorter) qsort(i, j, recDepth int) {
+	fmt.Printf("*** CALL AT DEPTH: %d\n", recDepth)
+	fmt.Printf("i: %d j: %d\n", i, j)
+	if recDepth >= 4 {
+		os.Exit(-1)
+	}
+	// Recursion base case
+	if i >= j {
+		fmt.Printf("Hit the base case with: slice[%d] = %d. Done!\n", i, qs.slice[i])
+		return
+	}
+
+	pivot := qs.slice[i] // pivot := 2
+	fmt.Printf("pivot := %d\n", pivot)
+
+	left := i + 1 // 1
+	right := j    // 4
+
+	// Partition
+	cnt := 0
+	for left <= right {
+
+		// I  : 1 <= 4 -> continue
+		// II : 1 <= 3 -> continue
+		// III: 1 <= 2 -> continue
+		// IV : 1 <= 1 -> continue
+
+		// I  : 3 < 2 -> false -> else
+		// II : 6 < 2 -> false -> else
+		// III: 5 < 2 -> false -> else
+		// IV : 1 < 2 -> true
+		fmt.Printf("slice[%d] = %d >= pivot?\n", left, qs.slice[left])
+		ord = qs.cmp(qs.slice[left], pivot)
+		if ord < 0 {
+			left++
+			fmt.Printf("NO: left = %d\n", left)
+		} else if ord == 0 {
+
+		} else {
+			qs.slice[right], qs.slice[left] = qs.slice[left], qs.slice[right]
+			right--
+			fmt.Printf("YES: slice = %v, right = %d\n", qs.slice, right)
+		}
+		cnt++
+		fmt.Println()
+	}
+
+	// Looks like we need to subtract one from the left in order
+	// to swap the correct elements
+	left--
+
+	fmt.Printf("Before swap: %v\n", qs.slice)
+
+	// Put pivot in place
+
+	qs.slice[left], qs.slice[i] = qs.slice[i], qs.slice[left]
+	fmt.Printf("After swap: %v\n", qs.slice)
+
+	qs.qsort(i, left-1, recDepth+1)
+	qs.qsort(left, j, recDepth+1)
 }
 
 type RadixSorter struct{}

@@ -2,6 +2,12 @@ package sorting
 
 import "testing"
 
+func TestQuickSort(t *testing.T) {
+	sq := *new(QuickSorter)
+	A := []int{2, 4, 3, 5, 7, 2, 2, 1, -2, 9}
+	sq.Sort(A, func(a int, b int) bool { return a < b })
+}
+
 func TestSorting(t *testing.T) {
 	var A []int
 	sorters := [...]Sorter{
@@ -9,6 +15,7 @@ func TestSorting(t *testing.T) {
 		*new(InsertionSorter),
 		*new(SelectionSorter),
 		*new(MergeSorter),
+		*new(QuickSorter),
 	}
 
 	for _, s := range sorters {
