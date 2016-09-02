@@ -10,7 +10,9 @@ type node struct {
 // https://en.wikipedia.org/wiki/Stable_marriage_problem
 
 // Women and men are represented as int\`s from `[1..n]` both inclusive. Every
-// woman needs to rank every man and vice versa in their preference lists.
+// woman needs to rank every man and vice versa in their preference lists. The
+// preferences are ordered such that the most wanted person comes first in the
+// list.
 
 // This function takes preference lists from both men and women and returns a
 // slice `husband[w]` saying that woman `w` should be married to husband

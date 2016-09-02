@@ -5,7 +5,6 @@ import (
 )
 
 func TestStableMatch(t *testing.T) {
-	t.Log("Det här är svinbra.")
 	men_prefs := [][]int{
 		[]int{1, 2, 3},
 		[]int{2, 1, 3},
