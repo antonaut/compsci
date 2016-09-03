@@ -1,4 +1,4 @@
-package main
+package problems
 
 type node struct {
 	man  int
@@ -17,7 +17,7 @@ type node struct {
 // This function takes preference lists from both men and women and returns a
 // slice `husband[w]` saying that woman `w` should be married to husband
 // `husband[w]`.
-func stable_match(men_pref [][]int, women_pref [][]int) []int {
+func StableMatch(men_pref [][]int, women_pref [][]int) []int {
 
 	n := len(men_pref)
 

@@ -1,4 +1,4 @@
-package main
+package problems
 
 import (
 	"testing"
@@ -17,7 +17,7 @@ func TestStableMatch(t *testing.T) {
 	}
 	n := len(men_prefs)
 
-	matching := stable_match(men_prefs, women_prefs)
+	matching := StableMatch(men_prefs, women_prefs)
 
 	for i := 1; i <= n; i++ {
 		t.Logf("m: %d, w: %d", matching[i], i)
