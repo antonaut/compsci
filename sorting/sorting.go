@@ -3,7 +3,6 @@ package sorting
 import (
 	"fmt"
 	"math"
-	"os"
 )
 
 type Sorter interface {
@@ -140,9 +139,6 @@ func (qs QuickSorter) Sort(slice []int, cmp func(int, int) bool) {
 func (qs QuickSorter) qsort(i, j, recDepth int) {
 	fmt.Printf("*** CALL AT DEPTH: %d\n", recDepth)
 	fmt.Printf("i: %d j: %d\n", i, j)
-	if recDepth >= 4 {
-		os.Exit(-1)
-	}
 	// Recursion base case
 	if i >= j {
 		fmt.Printf("Hit the base case with: slice[%d] = %d. Done!\n", i, qs.slice[i])
@@ -169,12 +165,10 @@ func (qs QuickSorter) qsort(i, j, recDepth int) {
 		// III: 5 < 2 -> false -> else
 		// IV : 1 < 2 -> true
 		fmt.Printf("slice[%d] = %d >= pivot?\n", left, qs.slice[left])
-		ord = qs.cmp(qs.slice[left], pivot)
-		if ord < 0 {
+		ord := qs.cmp(qs.slice[left], pivot)
+		if ord {
 			left++
 			fmt.Printf("NO: left = %d\n", left)
-		} else if ord == 0 {
-
 		} else {
 			qs.slice[right], qs.slice[left] = qs.slice[left], qs.slice[right]
 			right--
@@ -196,7 +190,7 @@ func (qs QuickSorter) qsort(i, j, recDepth int) {
 	fmt.Printf("After swap: %v\n", qs.slice)
 
 	qs.qsort(i, left-1, recDepth+1)
-	qs.qsort(left, j, recDepth+1)
+	qs.qsort(left+1, j, recDepth+1)
 }
 
 type RadixSorter struct{}
